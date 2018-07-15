@@ -12,8 +12,13 @@ if (process.argv.length != 3) {
 }
 var cookie = process.argv.pop();
 
+var output = "data/results.json";
+
 scrape(0, 1000).then(function(size) {
 	console.info("Done scraping", size, "entries");
+	return require('./aggregate')('data/', output).then(function() {
+		console.info("wrote single", output);
+	});
 });
 
 function scrape(from, size) {
